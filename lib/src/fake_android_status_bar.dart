@@ -66,7 +66,7 @@ class FakeAndroidNavBar extends StatelessWidget {
     return Container(
       height: height,
       decoration: BoxDecoration(
-        color: Colors.black,
+        color: Colors.blueGrey[800],
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(cornerRadius),
           bottomRight: Radius.circular(cornerRadius),
