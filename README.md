@@ -1,6 +1,7 @@
-# devicesimulator
+# DeviceSimulator
 
 DeviceSimulator allows you to easily test your Flutter app for different screen resolutions and platforms.
+![Device Simulator demo](images/device_simulator.gif)
 
 ## Getting Started
 
