@@ -1,11 +1,11 @@
-name: devicesimulator
+name: device_simulator
 description: DeviceSimulator allows you to easily test your Flutter app for different screen resolutions and platforms.
 version: 0.0.1
-author:
-homepage:
+author: Viktor Lidholt
+homepage: https://github.com/vlidholt/device_simulator
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.3.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -15,11 +15,16 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter.
 flutter:
+  assets:
+    - ios-bar-black.png
+    - ios-bar-white.png
+  fonts:
+    - family: appleicon
+      fonts:
+        - asset: assets/appleicon.ttf
 
   # To add assets to your package, add an assets section, like this:
   # assets:
