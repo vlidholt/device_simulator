@@ -2,6 +2,6 @@
 
 * Initial working version of DeviceSimulator
 
-## [0.9.2] - 2019-10-27 - Docs.
+## [0.9.3] - 2019-10-27 - Docs.
 
 * Improved documentation

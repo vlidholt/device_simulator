@@ -8,7 +8,7 @@ With DeviceSimulator you will be able to get a quick look at what your app would
 
 ## Getting Started
 
-This project was born out of the frustration of testing apps on multiple devices to make sure that the layout looked good in all resolutions. DeviceSimulator will let you quickly emulate different device types. It works best if you run it on an iPad Pro, but it also works well on the iOS Simulator.
+This project was born out of the frustration of testing apps on multiple devices to make sure that the layout looked good in all resolutions. DeviceSimulator will let you quickly emulate different device types. It works best if you run it on an iPad Pro, but it also works well on the iOS Simulator and smaller tablets.
 
 ### Add DeviceSimulator to your widget tree
 
