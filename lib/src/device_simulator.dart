@@ -21,16 +21,37 @@ int _currentDevice = 0;
 bool _screenshotMode = false;
 TargetPlatform _platform = TargetPlatform.iOS;
 
+/// Add the [DeviceSimulator] at the root of your widget tree, right below your
+/// App widget. DeviceSimulator will override the devices [MediaQueryData] and
+/// draw simulated device frames for different devices. It will also simulate
+/// the iOS or Android status bars (and on Android bottom navigation).
+/// You can disable the [DeviceSimulator] by setting the [enable] property to
+/// false, this is very much recommended when you are deploying the app.
 class DeviceSimulator extends StatefulWidget {
+  /// The widget tree that is affected handled by the [DeviceSimulator],
+  /// typically this is your whole app except the top [App] widget.
   final Widget child;
+
+  /// Enables or disables the DeviceSimulator, default is enabled, but this
+  /// should be set to false in production.
   final bool enable;
+
+  /// The [brightness] decides how to draw the status bar (black or white).
   final Brightness brightness;
+
+  /// The color of the iOS multitasking bar that is available on newer
+  /// iOS devices without a home button.
   final Color iOSMultitaskBarColor;
+
+  /// Visibility of the bottom Android navigation bar (default is visible).
   final bool androidShowNavigationBar;
+
+  /// The color of the top Android status bar (default is transparent black).
   final Color androidStatusBarBackgroundColor;
 
+  /// Creates a new [DeviceSimulator].
   DeviceSimulator(
-      {this.child,
+      {@required this.child,
       this.enable = true,
       this.brightness = Brightness.light,
       this.iOSMultitaskBarColor = Colors.grey,
