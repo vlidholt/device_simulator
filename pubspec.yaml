@@ -1,6 +1,6 @@
 name: device_simulator
 description: DeviceSimulator allows you to easily test your Flutter app for different screen resolutions and platforms.
-version: 0.0.1
+version: 0.9.0
 author: Viktor Lidholt <viktorlidholt@gmail.com>
 homepage: https://github.com/vlidholt/device_simulator
 
