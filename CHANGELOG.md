@@ -1,3 +1,3 @@
-## [0.0.1] - TODO: Add release date.
+## [0.9.1] - 2019-10-27 - Initial release.
 
-* TODO: Describe initial release.
+* Initial working version of DeviceSimulator
