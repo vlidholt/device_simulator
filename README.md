@@ -10,6 +10,8 @@ With DeviceSimulator you will be able to get a quick look at what your app would
 
 This project was born out of the frustration of testing apps on multiple devices to make sure that the layout looked good in all resolutions. DeviceSimulator will let you quickly emulate different device types. It works best if you run it on an iPad Pro, but it also works well on the iOS Simulator and smaller tablets.
 
+To learn more about designing for multiple resolutions, check out the [Medium article](https://medium.com/@vlidholt/building-flutter-apps-for-multiple-screen-sizes-and-devices-5ec7f86df96e) that I wrote on the topic.
+
 ### Add DeviceSimulator to your widget tree
 
 It's really easy to add DeviceSimulator to your app. Simply add it to the root of your widget tree, right under your App widget. Build the rest of the widget tree as you would normally do. This is a minimal example:
