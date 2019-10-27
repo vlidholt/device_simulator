@@ -6,7 +6,8 @@ class FakeAndroidStatusBar extends StatelessWidget {
   final double horizontalPadding;
   final Color backgroundColor;
 
-  FakeAndroidStatusBar({this.height, this.horizontalPadding=8.0, this.backgroundColor});
+  FakeAndroidStatusBar(
+      {this.height, this.horizontalPadding = 8.0, this.backgroundColor});
 
   @override
   Widget build(BuildContext context) {

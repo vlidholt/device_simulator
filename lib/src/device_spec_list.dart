@@ -39,13 +39,17 @@ final iosSpecs = <DeviceSpecification>[
   DeviceSpecification(
     name: 'iPad Air',
     size: Size(768.0, 1024.0),
-    padding: EdgeInsets.only(top: 20.0,),
+    padding: EdgeInsets.only(
+      top: 20.0,
+    ),
     tablet: true,
   ),
   DeviceSpecification(
     name: 'iPad Pro 10.5"',
     size: Size(834.0, 1112.0),
-    padding: EdgeInsets.only(top: 20.0,),
+    padding: EdgeInsets.only(
+      top: 20.0,
+    ),
     tablet: true,
   ),
   DeviceSpecification(
@@ -58,7 +62,9 @@ final iosSpecs = <DeviceSpecification>[
   DeviceSpecification(
     name: 'iPad Pro 12.9"',
     size: Size(1024.0, 1366.0),
-    padding: EdgeInsets.only(top: 20.0,),
+    padding: EdgeInsets.only(
+      top: 20.0,
+    ),
     tablet: true,
   ),
   DeviceSpecification(

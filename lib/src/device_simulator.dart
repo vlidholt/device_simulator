@@ -29,7 +29,13 @@ class DeviceSimulator extends StatefulWidget {
   final bool androidShowNavigationBar;
   final Color androidStatusBarBackgroundColor;
 
-  DeviceSimulator({this.child, this.enable=true, this.brightness=Brightness.light, this.iOSMultitaskBarColor=Colors.grey, this.androidShowNavigationBar=true, this.androidStatusBarBackgroundColor=Colors.black26});
+  DeviceSimulator(
+      {this.child,
+      this.enable = true,
+      this.brightness = Brightness.light,
+      this.iOSMultitaskBarColor = Colors.grey,
+      this.androidShowNavigationBar = true,
+      this.androidStatusBarBackgroundColor = Colors.black26});
 
   _DeviceSimulatorState createState() => _DeviceSimulatorState();
 }
@@ -40,14 +46,12 @@ class _DeviceSimulatorState extends State<DeviceSimulator> {
   @override
   void initState() {
     super.initState();
-    if (widget.enable)
-      SystemChrome.setEnabledSystemUIOverlays([]);
+    if (widget.enable) SystemChrome.setEnabledSystemUIOverlays([]);
   }
 
   @override
   Widget build(BuildContext context) {
-    if (!widget.enable)
-      return widget.child;
+    if (!widget.enable) return widget.child;
 
     var mq = MediaQuery.of(context);
     var theme = Theme.of(context);
@@ -80,15 +84,16 @@ class _DeviceSimulatorState extends State<DeviceSimulator> {
 
     double settingsHeight = _screenshotMode ? 0.0 : _kSettingsHeight;
     if (simulatedSize.height > mq.size.height - settingsHeight) {
-      simulatedSize = Size(simulatedSize.width, mq.size.height - settingsHeight);
+      simulatedSize =
+          Size(simulatedSize.width, mq.size.height - settingsHeight);
       overflowHeight = true;
     }
 
     double cornerRadius = _screenshotMode ? 0.0 : spec.cornerRadius;
 
     EdgeInsets padding = spec.padding;
-    if (mq.orientation == Orientation.landscape && spec.paddingLandscape != null)
-      padding = spec.paddingLandscape;
+    if (mq.orientation == Orientation.landscape &&
+        spec.paddingLandscape != null) padding = spec.paddingLandscape;
 
     var content = MediaQuery(
       key: _contentKey,
@@ -128,8 +133,7 @@ class _DeviceSimulatorState extends State<DeviceSimulator> {
           ),
         ),
       );
-    }
-    else {
+    } else {
       notch = Positioned(
         top: 0.0,
         right: (simulatedSize.width - notchSize.width) / 2.0,
@@ -151,16 +155,17 @@ class _DeviceSimulatorState extends State<DeviceSimulator> {
       left: 0.0,
       right: 0.0,
       height: padding.top,
-      child: _platform == TargetPlatform.iOS ? FakeIOSStatusBar(
-        brightness: widget.brightness,
-        height: padding.top,
-        notch: spec.notchSize != null,
-        roundedCorners: spec.cornerRadius > 0.0,
-      ) :
-      FakeAndroidStatusBar(
-        height: padding.top,
-        backgroundColor: widget.androidStatusBarBackgroundColor,
-      ),
+      child: _platform == TargetPlatform.iOS
+          ? FakeIOSStatusBar(
+              brightness: widget.brightness,
+              height: padding.top,
+              notch: spec.notchSize != null,
+              roundedCorners: spec.cornerRadius > 0.0,
+            )
+          : FakeAndroidStatusBar(
+              height: padding.top,
+              backgroundColor: widget.androidStatusBarBackgroundColor,
+            ),
     );
 
     Widget fakeMultitaskBar = Positioned(
@@ -191,8 +196,13 @@ class _DeviceSimulatorState extends State<DeviceSimulator> {
         clippedContent,
         notch,
         fakeStatusBar,
-        if (_platform == TargetPlatform.iOS && spec.cornerRadius > 0.0 && mq.size != simulatedSize) fakeMultitaskBar,
-        if (widget.androidShowNavigationBar && _platform == TargetPlatform.android) fakeNavigationBar,
+        if (_platform == TargetPlatform.iOS &&
+            spec.cornerRadius > 0.0 &&
+            mq.size != simulatedSize)
+          fakeMultitaskBar,
+        if (widget.androidShowNavigationBar &&
+            _platform == TargetPlatform.android)
+          fakeNavigationBar,
       ],
     );
 
@@ -202,7 +212,8 @@ class _DeviceSimulatorState extends State<DeviceSimulator> {
         children: <Widget>[
           Expanded(
             child: Align(
-              alignment: _screenshotMode ? Alignment(-1.0, -1.0) : Alignment(0.0, 0.0),
+              alignment:
+                  _screenshotMode ? Alignment(-1.0, -1.0) : Alignment(0.0, 0.0),
               child: Container(
                 width: simulatedSize.width,
                 height: simulatedSize.height,
@@ -210,122 +221,140 @@ class _DeviceSimulatorState extends State<DeviceSimulator> {
               ),
             ),
           ),
-          if (!_screenshotMode) Container(
-            height: 72.0,
-            color: Colors.black,
-            padding: EdgeInsets.only(left: 16.0 + mq.padding.left, right: 16.0 + mq.padding.right, bottom: mq.padding.bottom),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                IconButton(
-                  icon: Icon(
-                    Icons.android,
-                    color: _platform == TargetPlatform.android ? Colors.white : Colors.white24,
-                    size: 22.0,
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      _platform = TargetPlatform.android;
-                      _currentDevice = 0;
-                    });
-                  },
-                ),
-                IconButton(
-                  icon: Icon(
-                    IconApple.apple, // TODO: better image
-                    color: _platform == TargetPlatform.iOS ? Colors.white : Colors.white24,
-                    size: 20.0,
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      _platform = TargetPlatform.iOS;
-                      _currentDevice = 0;
-                    });
-                  },
-                ),
-                VerticalDivider(
-                  color: _kDividerColor,
-                  indent: 4.0,
-                ),
-                IconButton(
-                  icon: Icon(Icons.camera_alt),
-                  color: Colors.white,
-                  onPressed: () {
-                    setState(() {
-                      _screenshotMode = true;
-                    });
-                  },
-                ),
-                VerticalDivider(
-                  color: _kDividerColor,
-                  indent: 4.0,
-                ),
-                Container(
-                  padding: EdgeInsets.only(left: 8.0),
-                  width: 120.0,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          Text(
-                            '${simulatedSize.width.round()} px',
-                            style: _kTextStyle.copyWith(color: overflowWidth ? Colors.orange : null),
-                          ),
-                          Text(' • ', style: _kTextStyle,),
-                          Text(
-                            '${simulatedSize.height.round()} px',
-                            style: _kTextStyle.copyWith(color: overflowHeight ? Colors.orange : null),
-                          ),
-                        ],
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 4.0),
-                        child: Text(
-                          specs[_currentDevice].name,
-                          style: _kTextStyle.copyWith(color: Colors.white54, fontSize: 10.0),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.start,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Slider(
-                    divisions: specs.length - 1,
-                    min: 0.0,
-                    max: (specs.length - 1).toDouble(),
-                    value: _currentDevice.toDouble(),
-                    label: specs[_currentDevice].name,
-                    onChanged: (double device) {
+          if (!_screenshotMode)
+            Container(
+              height: 72.0,
+              color: Colors.black,
+              padding: EdgeInsets.only(
+                  left: 16.0 + mq.padding.left,
+                  right: 16.0 + mq.padding.right,
+                  bottom: mq.padding.bottom),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  IconButton(
+                    icon: Icon(
+                      Icons.android,
+                      color: _platform == TargetPlatform.android
+                          ? Colors.white
+                          : Colors.white24,
+                      size: 22.0,
+                    ),
+                    onPressed: () {
                       setState(() {
-                        _currentDevice = device.round();
+                        _platform = TargetPlatform.android;
+                        _currentDevice = 0;
                       });
                     },
                   ),
-                ),
-              ],
+                  IconButton(
+                    icon: Icon(
+                      IconApple.apple, // TODO: better image
+                      color: _platform == TargetPlatform.iOS
+                          ? Colors.white
+                          : Colors.white24,
+                      size: 20.0,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _platform = TargetPlatform.iOS;
+                        _currentDevice = 0;
+                      });
+                    },
+                  ),
+                  VerticalDivider(
+                    color: _kDividerColor,
+                    indent: 4.0,
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.camera_alt),
+                    color: Colors.white,
+                    onPressed: () {
+                      setState(() {
+                        _screenshotMode = true;
+                      });
+                    },
+                  ),
+                  VerticalDivider(
+                    color: _kDividerColor,
+                    indent: 4.0,
+                  ),
+                  Container(
+                    padding: EdgeInsets.only(left: 8.0),
+                    width: 120.0,
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            Text(
+                              '${simulatedSize.width.round()} px',
+                              style: _kTextStyle.copyWith(
+                                  color: overflowWidth ? Colors.orange : null),
+                            ),
+                            Text(
+                              ' • ',
+                              style: _kTextStyle,
+                            ),
+                            Text(
+                              '${simulatedSize.height.round()} px',
+                              style: _kTextStyle.copyWith(
+                                  color: overflowHeight ? Colors.orange : null),
+                            ),
+                          ],
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 4.0),
+                          child: Text(
+                            specs[_currentDevice].name,
+                            style: _kTextStyle.copyWith(
+                                color: Colors.white54, fontSize: 10.0),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.start,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: Slider(
+                      divisions: specs.length - 1,
+                      min: 0.0,
+                      max: (specs.length - 1).toDouble(),
+                      value: _currentDevice.toDouble(),
+                      label: specs[_currentDevice].name,
+                      onChanged: (double device) {
+                        setState(() {
+                          _currentDevice = device.round();
+                        });
+                      },
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
         ],
       ),
     );
 
     return GestureDetector(
-      behavior: _screenshotMode ? HitTestBehavior.opaque : HitTestBehavior.deferToChild,
+      behavior: _screenshotMode
+          ? HitTestBehavior.opaque
+          : HitTestBehavior.deferToChild,
       child: IgnorePointer(
         ignoring: _screenshotMode,
         child: screen,
       ),
-      onTap: _screenshotMode ? () {
-        setState(() {
-          _screenshotMode = false;
-        });
-      } : null,
+      onTap: _screenshotMode
+          ? () {
+              setState(() {
+                _screenshotMode = false;
+              });
+            }
+          : null,
     );
   }
 }

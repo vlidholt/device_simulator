@@ -19,24 +19,28 @@ class FakeIOSStatusBar extends StatelessWidget {
     fontWeight: FontWeight.w600,
   );
 
-  FakeIOSStatusBar({this.height, this.brightness, this.tablet=false, this.notch=true, this.roundedCorners=true});
+  FakeIOSStatusBar(
+      {this.height,
+      this.brightness,
+      this.tablet = false,
+      this.notch = true,
+      this.roundedCorners = true});
 
   @override
   Widget build(BuildContext context) {
     TextStyle style = notch ? _uiStyleNotch : _uiStyle;
-    style = style.copyWith(color: brightness == Brightness.light ? Colors.black : Colors.white);
+    style = style.copyWith(
+        color: brightness == Brightness.light ? Colors.black : Colors.white);
 
     double leftPadding;
     double rightPadding;
     if (notch) {
       leftPadding = 20.0;
       rightPadding = 20.0;
-    }
-    else if (roundedCorners) {
+    } else if (roundedCorners) {
       leftPadding = 20.0;
       rightPadding = 20.0;
-    }
-    else {
+    } else {
       leftPadding = 12.0;
       rightPadding = 8.0;
     }
@@ -47,7 +51,7 @@ class FakeIOSStatusBar extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.only(left: leftPadding, top: notch ? 2.0: 2.0),
+            padding: EdgeInsets.only(left: leftPadding, top: notch ? 2.0 : 2.0),
             child: Text(
               notch ? '1:37 PM' : '1:37 PM   Mon May 4',
               style: style,
@@ -60,7 +64,12 @@ class FakeIOSStatusBar extends StatelessWidget {
             padding: EdgeInsets.only(right: rightPadding),
             child: SizedBox(
               height: notch ? 14.0 : 12.0,
-              child: Image.asset(brightness == Brightness.light ? 'assets/ios-bar-black.png' : 'assets/ios-bar-white.png', package: 'device_simulator',),
+              child: Image.asset(
+                brightness == Brightness.light
+                    ? 'assets/ios-bar-black.png'
+                    : 'assets/ios-bar-white.png',
+                package: 'device_simulator',
+              ),
             ),
           ),
         ],

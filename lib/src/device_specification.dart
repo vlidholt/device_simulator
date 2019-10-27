@@ -10,5 +10,13 @@ class DeviceSpecification {
   final bool tablet;
   final double navBarHeight;
 
-  DeviceSpecification({this.name, this.size, this.padding, this.paddingLandscape, this.cornerRadius=0.0, this.notchSize, this.tablet=false, this.navBarHeight=48.0});
+  DeviceSpecification(
+      {this.name,
+      this.size,
+      this.padding,
+      this.paddingLandscape,
+      this.cornerRadius = 0.0,
+      this.notchSize,
+      this.tablet = false,
+      this.navBarHeight = 48.0});
 }
