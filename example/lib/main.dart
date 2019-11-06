@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:device_simulator/device_simulator.dart';
+import 'package:flutter/material.dart';
 
 // It's good practice to define a constant for enabling the device simulator
 // so you can easily turn it on or off
@@ -12,20 +12,44 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'DeviceSimulator demo',
-      home: DeviceSimulator(
+    return DeviceSimulator(
         brightness: Brightness.dark,
         enable: debugEnableDeviceSimulator,
-        child: Scaffold(
-          appBar: AppBar(
-            title: Text('DeviceSimulator Demo'),
-          ),
-          body: Center(
-            child: Text('Hello multiple resolutions!'),
-          ),
-        ),
-      ),
-    );
+        child: MaterialApp(
+          title: 'DeviceSimulator demo',
+          initialRoute: '/',
+          routes: {
+            '/': (context) {
+              return Scaffold(
+                appBar: AppBar(
+                  title: Text('DeviceSimulator Demo'),
+                ),
+                body: SizedBox.expand(
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                      Text('Hello multiple resolutions!'),
+                      RaisedButton(
+                        child: Text('Open'),
+                        onPressed: () {
+                          Navigator.of(context).pushNamed('/test');
+                        },
+                      )
+                    ])),
+              );
+            },
+            '/test': (context) {
+              return Scaffold(
+                appBar: AppBar(
+                  title: Text('Navigator Test'),
+                ),
+                body: Center(
+                  child: Text('Hello  multiple resolutions!'),
+                ),
+              );
+            }
+          },
+        ));
   }
 }
