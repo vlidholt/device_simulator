@@ -62,7 +62,7 @@ class DeviceSimulator extends StatefulWidget {
   _DeviceSimulatorState createState() => _DeviceSimulatorState();
 }
 
-class _DeviceSimulatorState extends State<DeviceSimulator>{
+class _DeviceSimulatorState extends State<DeviceSimulator> {
   Key _contentKey = UniqueKey();
 
   @override
@@ -73,14 +73,14 @@ class _DeviceSimulatorState extends State<DeviceSimulator>{
 
   @override
   Widget build(BuildContext context) {
+    if (!widget.enable) return widget.child;
+
     return Directionality(
         textDirection: TextDirection.ltr,
         child: MediaQuery(
           data: MediaQueryData.fromWindow(WidgetsBinding.instance.window),
           child: Builder(
             builder: (context) {
-              if (!widget.enable) return widget.child;
-
               var mq = MediaQuery.of(context);
               var theme = Theme.of(context);
 
