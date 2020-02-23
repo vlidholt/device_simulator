@@ -44,18 +44,12 @@ It's really easy to add DeviceSimulator to your app. Simply add it to the root o
       }
     }
  
-### Pushing Routes
 
-Unfortunately, the current implementation does not automatically support pushing routes on top of your main screen. To make this work, you will need to include a DeviceSimulator in each route you push. This is an example:
+### Known issues & limitations
 
-    Navigator.push(context, new MaterialPageRoute<Null>(
-      builder: (BuildContext context) {
-        return DeviceSimulator(
-          enable: debugEnableDeviceSimulator,
-          child: MyScaffold(...),
-        );
-      },
-    ));
+- Hero animations may be broken while having the DeviceSimulator enabled. It will not affect the production ready app.
+- It's currently only possible to use the home route of MaterialApp. To get around this limitation, you can place another Navigator as a child to MaterialApp.
+
 
 ### Caveats
 

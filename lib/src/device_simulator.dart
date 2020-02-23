@@ -1,6 +1,8 @@
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 
+import 'package:custom_navigator/custom_navigator.dart';
+
 import 'device_spec_list.dart';
 import 'disabled.dart';
 import 'fake_android_status_bar.dart';
@@ -63,6 +65,7 @@ class DeviceSimulator extends StatefulWidget {
 
 class _DeviceSimulatorState extends State<DeviceSimulator> {
   Key _contentKey = UniqueKey();
+  Key _navigatorKey = GlobalKey<NavigatorState>();
 
   @override
   void initState() {
@@ -124,7 +127,11 @@ class _DeviceSimulatorState extends State<DeviceSimulator> {
       ),
       child: Theme(
         data: theme.copyWith(platform: _platform),
-        child: widget.child,
+        child: CustomNavigator(
+          navigatorKey: _navigatorKey,
+          home: widget.child,
+          pageRoute: PageRoutes.materialPageRoute,
+        ),
       ),
     );
 
