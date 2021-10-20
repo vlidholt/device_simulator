@@ -4,6 +4,6 @@ class IconApple {
   static final apple = IconData(
     0xeabe,
     fontFamily: 'appleicon',
-    fontPackage: 'device_simulator',
+    fontPackage: 'dotup_device_simulator',
   );
 }

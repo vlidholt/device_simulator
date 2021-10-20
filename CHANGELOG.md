@@ -11,3 +11,5 @@
 * Breaking change. This update includes automatic support for routes. There is no longer a need to include DeviceSimulator when pushing a route.
 
 ## [1.0.0] - Quick n dirty null safety
+
+## [1.0.1] - Fix: Missing assets
