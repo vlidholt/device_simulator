@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +13,7 @@ import 'apple_icon.dart';
 const double _kSettingsHeight = 72.0;
 final Color? _kBackgroundColor = Colors.grey[900];
 final Color? _kDividerColor = Colors.grey[700];
+
 final _kTextStyle = TextStyle(
   color: Colors.white,
   fontFamily: '.SF UI Text',
@@ -18,9 +21,7 @@ final _kTextStyle = TextStyle(
   decoration: TextDecoration.none,
 );
 
-int _currentDevice = 0;
 bool _screenshotMode = false;
-TargetPlatform _platform = TargetPlatform.iOS;
 
 /// Add the [DeviceSimulator] at the root of your widget tree, right below your
 /// App widget. DeviceSimulator will override the devices [MediaQueryData] and
@@ -50,14 +51,23 @@ class DeviceSimulator extends StatefulWidget {
   /// The color of the top Android status bar (default is transparent black).
   final Color androidStatusBarBackgroundColor;
 
+  final Orientation? orientation;
+
+  final int initialDeviceIndex;
+  final TargetPlatform initialPlatform;
+
   /// Creates a new [DeviceSimulator].
-  DeviceSimulator(
-      {required this.child,
-      this.enable = true,
-      this.brightness = Brightness.light,
-      this.iOSMultitaskBarColor = Colors.grey,
-      this.androidShowNavigationBar = true,
-      this.androidStatusBarBackgroundColor = Colors.black26});
+  DeviceSimulator({
+    required this.child,
+    this.enable = true,
+    this.brightness = Brightness.light,
+    this.iOSMultitaskBarColor = Colors.grey,
+    this.androidShowNavigationBar = true,
+    this.androidStatusBarBackgroundColor = Colors.black26,
+    this.orientation,
+    this.initialDeviceIndex = 0,
+    this.initialPlatform = TargetPlatform.android,
+  });
 
   _DeviceSimulatorState createState() => _DeviceSimulatorState();
 }
@@ -65,11 +75,16 @@ class DeviceSimulator extends StatefulWidget {
 class _DeviceSimulatorState extends State<DeviceSimulator> {
   final _contentKey = UniqueKey();
   final _navigatorKey = GlobalKey<NavigatorState>();
+  late int _currentDevice;
+  late TargetPlatform _platform;
 
   @override
   void initState() {
     super.initState();
     if (widget.enable) SystemChrome.setEnabledSystemUIOverlays([]);
+
+    _platform = widget.initialPlatform;
+    _currentDevice = widget.initialDeviceIndex;
   }
 
   @override
@@ -90,8 +105,11 @@ class _DeviceSimulatorState extends State<DeviceSimulator> {
     var spec = specs[_currentDevice];
 
     Size simulatedSize = spec.size;
-    if (mq.orientation == Orientation.landscape) simulatedSize = simulatedSize.flipped;
 
+    final isLandscape = widget.orientation == null ? mq.orientation == Orientation.landscape : widget.orientation == Orientation.landscape;
+    if (isLandscape) {
+      simulatedSize = simulatedSize.flipped;
+    }
     double navBarHeight = 0.0;
     if (_platform == TargetPlatform.android && widget.androidShowNavigationBar) navBarHeight = spec.navBarHeight;
 
@@ -112,7 +130,7 @@ class _DeviceSimulatorState extends State<DeviceSimulator> {
     double cornerRadius = _screenshotMode ? 0.0 : spec.cornerRadius;
 
     EdgeInsets padding = spec.padding;
-    if (mq.orientation == Orientation.landscape && spec.paddingLandscape != null) padding = spec.paddingLandscape!;
+    if (isLandscape && spec.paddingLandscape != null) padding = spec.paddingLandscape!;
 
     var content = MediaQuery(
       key: _contentKey,
@@ -140,7 +158,7 @@ class _DeviceSimulatorState extends State<DeviceSimulator> {
 
     Size notchSize = _screenshotMode ? Size.zero : spec.notchSize ?? Size.zero;
     Widget notch;
-    if (mq.orientation == Orientation.landscape) {
+    if (isLandscape) {
       notch = Positioned(
         left: 0.0,
         top: (simulatedSize.height - notchSize.width) / 2.0,

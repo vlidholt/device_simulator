@@ -15,3 +15,9 @@
 ## [1.0.1] - Fix: Missing assets
 
 ## [1.0.2] - Fix: Missing assets
+
+## [1.0.3] - New
+
+* initialDeviceIndex: 3,
+* initialPlatform: TargetPlatform.android,
+* orientation: Orientation.portrait,

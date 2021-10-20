@@ -15,6 +15,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'DeviceSimulator demo',
       home: DeviceSimulator(
+        initialDeviceIndex: 3,
+        initialPlatform: TargetPlatform.android,
+        orientation: Orientation.portrait,
         brightness: Brightness.dark,
         enable: debugEnableDeviceSimulator,
         child: Scaffold(
