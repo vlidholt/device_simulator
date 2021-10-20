@@ -13,3 +13,5 @@
 ## [1.0.0] - Quick n dirty null safety
 
 ## [1.0.1] - Fix: Missing assets
+
+## [1.0.2] - Fix: Missing assets

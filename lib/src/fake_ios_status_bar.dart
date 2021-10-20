@@ -60,7 +60,7 @@ class FakeIOSStatusBar extends StatelessWidget {
               height: notch ? 14.0 : 12.0,
               child: Image.asset(
                 brightness == Brightness.light ? 'assets/ios-bar-black.png' : 'assets/ios-bar-white.png',
-                // package: 'device_simulator',
+                package: 'dotup_device_simulator',
               ),
             ),
           ),
