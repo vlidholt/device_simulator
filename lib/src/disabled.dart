@@ -4,10 +4,9 @@ class DisabledDeviceSimulator extends StatefulWidget {
   final Widget child;
   final TextStyle style;
 
-  DisabledDeviceSimulator({this.child, this.style});
+  DisabledDeviceSimulator({required this.child, required this.style});
 
-  _DisabledDeviceSimulatorState createState() =>
-      _DisabledDeviceSimulatorState();
+  _DisabledDeviceSimulatorState createState() => _DisabledDeviceSimulatorState();
 }
 
 class _DisabledDeviceSimulatorState extends State<DisabledDeviceSimulator> {
@@ -16,8 +15,7 @@ class _DisabledDeviceSimulatorState extends State<DisabledDeviceSimulator> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      behavior:
-          showWarning ? HitTestBehavior.opaque : HitTestBehavior.deferToChild,
+      behavior: showWarning ? HitTestBehavior.opaque : HitTestBehavior.deferToChild,
       onTap: () {
         setState(() {
           showWarning = false;

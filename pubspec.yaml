@@ -5,12 +5,12 @@ author: Viktor Lidholt <viktorlidholt@gmail.com>
 homepage: https://github.com/vlidholt/device_simulator
 
 environment:
-  sdk: ">=2.3.0 <3.0.0"
+  sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  custom_navigator: ^0.3.0
+
 
 dev_dependencies:
   flutter_test:

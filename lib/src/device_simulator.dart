@@ -1,8 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 
-import 'package:custom_navigator/custom_navigator.dart';
-
+import 'custom_navigator.dart';
 import 'device_spec_list.dart';
 import 'disabled.dart';
 import 'fake_android_status_bar.dart';
@@ -10,8 +9,8 @@ import 'fake_ios_status_bar.dart';
 import 'apple_icon.dart';
 
 const double _kSettingsHeight = 72.0;
-final Color _kBackgroundColor = Colors.grey[900];
-final Color _kDividerColor = Colors.grey[700];
+final Color? _kBackgroundColor = Colors.grey[900];
+final Color? _kDividerColor = Colors.grey[700];
 final _kTextStyle = TextStyle(
   color: Colors.white,
   fontFamily: '.SF UI Text',
@@ -53,7 +52,7 @@ class DeviceSimulator extends StatefulWidget {
 
   /// Creates a new [DeviceSimulator].
   DeviceSimulator(
-      {@required this.child,
+      {required this.child,
       this.enable = true,
       this.brightness = Brightness.light,
       this.iOSMultitaskBarColor = Colors.grey,
@@ -64,8 +63,8 @@ class DeviceSimulator extends StatefulWidget {
 }
 
 class _DeviceSimulatorState extends State<DeviceSimulator> {
-  Key _contentKey = UniqueKey();
-  Key _navigatorKey = GlobalKey<NavigatorState>();
+  final _contentKey = UniqueKey();
+  final _navigatorKey = GlobalKey<NavigatorState>();
 
   @override
   void initState() {
@@ -91,12 +90,10 @@ class _DeviceSimulatorState extends State<DeviceSimulator> {
     var spec = specs[_currentDevice];
 
     Size simulatedSize = spec.size;
-    if (mq.orientation == Orientation.landscape)
-      simulatedSize = simulatedSize.flipped;
+    if (mq.orientation == Orientation.landscape) simulatedSize = simulatedSize.flipped;
 
     double navBarHeight = 0.0;
-    if (_platform == TargetPlatform.android && widget.androidShowNavigationBar)
-      navBarHeight = spec.navBarHeight;
+    if (_platform == TargetPlatform.android && widget.androidShowNavigationBar) navBarHeight = spec.navBarHeight;
 
     bool overflowWidth = false;
     bool overflowHeight = false;
@@ -108,16 +105,14 @@ class _DeviceSimulatorState extends State<DeviceSimulator> {
 
     double settingsHeight = _screenshotMode ? 0.0 : _kSettingsHeight;
     if (simulatedSize.height > mq.size.height - settingsHeight) {
-      simulatedSize =
-          Size(simulatedSize.width, mq.size.height - settingsHeight);
+      simulatedSize = Size(simulatedSize.width, mq.size.height - settingsHeight);
       overflowHeight = true;
     }
 
     double cornerRadius = _screenshotMode ? 0.0 : spec.cornerRadius;
 
     EdgeInsets padding = spec.padding;
-    if (mq.orientation == Orientation.landscape &&
-        spec.paddingLandscape != null) padding = spec.paddingLandscape;
+    if (mq.orientation == Orientation.landscape && spec.paddingLandscape != null) padding = spec.paddingLandscape!;
 
     var content = MediaQuery(
       key: _contentKey,
@@ -224,13 +219,8 @@ class _DeviceSimulatorState extends State<DeviceSimulator> {
         clippedContent,
         notch,
         fakeStatusBar,
-        if (_platform == TargetPlatform.iOS &&
-            spec.cornerRadius > 0.0 &&
-            mq.size != simulatedSize)
-          fakeMultitaskBar,
-        if (widget.androidShowNavigationBar &&
-            _platform == TargetPlatform.android)
-          fakeNavigationBar,
+        if (_platform == TargetPlatform.iOS && spec.cornerRadius > 0.0 && mq.size != simulatedSize) fakeMultitaskBar,
+        if (widget.androidShowNavigationBar && _platform == TargetPlatform.android) fakeNavigationBar,
       ],
     );
 
@@ -240,8 +230,7 @@ class _DeviceSimulatorState extends State<DeviceSimulator> {
         children: <Widget>[
           Expanded(
             child: Align(
-              alignment:
-                  _screenshotMode ? Alignment(-1.0, -1.0) : Alignment(0.0, 0.0),
+              alignment: _screenshotMode ? Alignment(-1.0, -1.0) : Alignment(0.0, 0.0),
               child: Container(
                 width: simulatedSize.width,
                 height: simulatedSize.height,
@@ -253,19 +242,14 @@ class _DeviceSimulatorState extends State<DeviceSimulator> {
             Container(
               height: 72.0,
               color: Colors.black,
-              padding: EdgeInsets.only(
-                  left: 16.0 + mq.padding.left,
-                  right: 16.0 + mq.padding.right,
-                  bottom: mq.padding.bottom),
+              padding: EdgeInsets.only(left: 16.0 + mq.padding.left, right: 16.0 + mq.padding.right, bottom: mq.padding.bottom),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   IconButton(
                     icon: Icon(
                       Icons.android,
-                      color: _platform == TargetPlatform.android
-                          ? Colors.white
-                          : Colors.white24,
+                      color: _platform == TargetPlatform.android ? Colors.white : Colors.white24,
                       size: 22.0,
                     ),
                     onPressed: () {
@@ -278,9 +262,7 @@ class _DeviceSimulatorState extends State<DeviceSimulator> {
                   IconButton(
                     icon: Icon(
                       IconApple.apple, // TODO: better image
-                      color: _platform == TargetPlatform.iOS
-                          ? Colors.white
-                          : Colors.white24,
+                      color: _platform == TargetPlatform.iOS ? Colors.white : Colors.white24,
                       size: 20.0,
                     ),
                     onPressed: () {
@@ -319,8 +301,7 @@ class _DeviceSimulatorState extends State<DeviceSimulator> {
                           children: <Widget>[
                             Text(
                               '${simulatedSize.width.round()} px',
-                              style: _kTextStyle.copyWith(
-                                  color: overflowWidth ? Colors.orange : null),
+                              style: _kTextStyle.copyWith(color: overflowWidth ? Colors.orange : null),
                             ),
                             Text(
                               ' • ',
@@ -328,8 +309,7 @@ class _DeviceSimulatorState extends State<DeviceSimulator> {
                             ),
                             Text(
                               '${simulatedSize.height.round()} px',
-                              style: _kTextStyle.copyWith(
-                                  color: overflowHeight ? Colors.orange : null),
+                              style: _kTextStyle.copyWith(color: overflowHeight ? Colors.orange : null),
                             ),
                           ],
                         ),
@@ -337,8 +317,7 @@ class _DeviceSimulatorState extends State<DeviceSimulator> {
                           padding: EdgeInsets.only(top: 4.0),
                           child: Text(
                             specs[_currentDevice].name,
-                            style: _kTextStyle.copyWith(
-                                color: Colors.white54, fontSize: 10.0),
+                            style: _kTextStyle.copyWith(color: Colors.white54, fontSize: 10.0),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             textAlign: TextAlign.start,
@@ -369,9 +348,7 @@ class _DeviceSimulatorState extends State<DeviceSimulator> {
     );
 
     return GestureDetector(
-      behavior: _screenshotMode
-          ? HitTestBehavior.opaque
-          : HitTestBehavior.deferToChild,
+      behavior: _screenshotMode ? HitTestBehavior.opaque : HitTestBehavior.deferToChild,
       child: IgnorePointer(
         ignoring: _screenshotMode,
         child: screen,

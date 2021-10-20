@@ -19,18 +19,12 @@ class FakeIOSStatusBar extends StatelessWidget {
     fontWeight: FontWeight.w600,
   );
 
-  FakeIOSStatusBar(
-      {this.height,
-      this.brightness,
-      this.tablet = false,
-      this.notch = true,
-      this.roundedCorners = true});
+  FakeIOSStatusBar({required this.height, required this.brightness, this.tablet = false, this.notch = true, this.roundedCorners = true});
 
   @override
   Widget build(BuildContext context) {
     TextStyle style = notch ? _uiStyleNotch : _uiStyle;
-    style = style.copyWith(
-        color: brightness == Brightness.light ? Colors.black : Colors.white);
+    style = style.copyWith(color: brightness == Brightness.light ? Colors.black : Colors.white);
 
     double leftPadding;
     double rightPadding;
@@ -65,9 +59,7 @@ class FakeIOSStatusBar extends StatelessWidget {
             child: SizedBox(
               height: notch ? 14.0 : 12.0,
               child: Image.asset(
-                brightness == Brightness.light
-                    ? 'assets/ios-bar-black.png'
-                    : 'assets/ios-bar-white.png',
+                brightness == Brightness.light ? 'assets/ios-bar-black.png' : 'assets/ios-bar-white.png',
                 package: 'device_simulator',
               ),
             ),
@@ -83,7 +75,7 @@ class FakeIOSMultitaskBar extends StatelessWidget {
   final bool tablet;
   final Color color;
 
-  FakeIOSMultitaskBar({this.width, this.tablet, this.color});
+  FakeIOSMultitaskBar({required this.width, required this.tablet, required this.color});
 
   @override
   Widget build(BuildContext context) {
