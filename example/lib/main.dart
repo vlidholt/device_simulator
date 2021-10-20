@@ -1,5 +1,5 @@
+import 'package:dotup_device_simulator/dotup_device_simulator.dart';
 import 'package:flutter/material.dart';
-import 'package:device_simulator/device_simulator.dart';
 
 // It's good practice to define a constant for enabling the device simulator
 // so you can easily turn it on or off

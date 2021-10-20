@@ -50,7 +50,7 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.2"
-  device_simulator:
+  dotup_device_simulator:
     dependency: "direct main"
     description:
       path: ".."

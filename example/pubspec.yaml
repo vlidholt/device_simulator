@@ -10,7 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  device_simulator:
+  dotup_device_simulator:
     path: ../
 
   cupertino_icons: ^0.1.2
