@@ -1,6 +1,6 @@
 name: dotup_device_simulator
 description: DeviceSimulator allows you to easily test your Flutter app for different screen resolutions and platforms. Quick n dirty null safety
-version: 1.0.3
+version: 1.1.0
 homepage: https://dotup.de
 repository: https://github.com/flutter-entwickler/device_simulator
 
@@ -8,8 +8,10 @@ environment:
   sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
+  dotup_flutter_widgets: ^2.1.3
   flutter:
     sdk: flutter
+  font_awesome_flutter: ^9.2.0
 
 
 dev_dependencies:
@@ -22,7 +24,3 @@ flutter:
   assets:
     - ios-bar-black.png
     - ios-bar-white.png
-  fonts:
-    - family: appleicon
-      fonts:
-        - asset: assets/appleicon.ttf

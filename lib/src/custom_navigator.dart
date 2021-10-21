@@ -106,7 +106,7 @@ class _CustomNavigatorState extends State<CustomNavigator> implements WidgetsBin
   @override
   Future<bool> didPopRoute() async {
     assert(mounted);
-    final navigator = _navigator?.currentState;
+    final navigator = _navigator.currentState;
     if (navigator == null) return false;
     return await navigator.maybePop();
   }
@@ -114,7 +114,7 @@ class _CustomNavigatorState extends State<CustomNavigator> implements WidgetsBin
   @override
   Future<bool> didPushRoute(String route) async {
     assert(mounted);
-    final navigator = _navigator?.currentState;
+    final navigator = _navigator.currentState;
     if (navigator == null) return false;
     navigator.pushNamed(route);
     return true;

@@ -1,24 +1,27 @@
 import 'package:flutter/material.dart';
 import 'device_specification.dart';
 
-final iosSpecs = <DeviceSpecification>[
+final iosDevices = <DeviceSpecification>[
   DeviceSpecification(
     name: 'iPhone SE',
     size: Size(320.0, 568.0),
     padding: EdgeInsets.only(top: 20),
     paddingLandscape: EdgeInsets.all(0.0),
+    platform: TargetPlatform.iOS,
   ),
   DeviceSpecification(
     name: 'iPhone 8',
     size: Size(375.0, 667.0),
     padding: EdgeInsets.only(top: 20),
     paddingLandscape: EdgeInsets.all(0.0),
+    platform: TargetPlatform.iOS,
   ),
   DeviceSpecification(
     name: 'iPhone 8 Plus',
     size: Size(414.0, 736.0),
     padding: EdgeInsets.only(top: 20),
     paddingLandscape: EdgeInsets.all(0.0),
+    platform: TargetPlatform.iOS,
   ),
   DeviceSpecification(
     name: 'iPhone X',
@@ -27,6 +30,7 @@ final iosSpecs = <DeviceSpecification>[
     padding: EdgeInsets.only(top: 44.0, bottom: 34.0),
     paddingLandscape: EdgeInsets.only(left: 44.0, right: 44.0, bottom: 21.0),
     notchSize: Size(209.0, 30.0),
+    platform: TargetPlatform.iOS,
   ),
   DeviceSpecification(
     name: 'iPhone Xs Max',
@@ -35,6 +39,7 @@ final iosSpecs = <DeviceSpecification>[
     padding: EdgeInsets.only(top: 44.0, bottom: 34.0),
     paddingLandscape: EdgeInsets.only(left: 44.0, right: 44.0, bottom: 21.0),
     notchSize: Size(209.0, 30.0),
+    platform: TargetPlatform.iOS,
   ),
   DeviceSpecification(
     name: 'iPad Air',
@@ -43,6 +48,7 @@ final iosSpecs = <DeviceSpecification>[
       top: 20.0,
     ),
     tablet: true,
+    platform: TargetPlatform.iOS,
   ),
   DeviceSpecification(
     name: 'iPad Pro 10.5"',
@@ -51,6 +57,7 @@ final iosSpecs = <DeviceSpecification>[
       top: 20.0,
     ),
     tablet: true,
+    platform: TargetPlatform.iOS,
   ),
   DeviceSpecification(
     name: 'iPad Pro 11"',
@@ -58,6 +65,7 @@ final iosSpecs = <DeviceSpecification>[
     padding: EdgeInsets.only(top: 24.0, bottom: 20.0),
     tablet: true,
     cornerRadius: 20.0,
+    platform: TargetPlatform.iOS,
   ),
   DeviceSpecification(
     name: 'iPad Pro 12.9"',
@@ -66,6 +74,7 @@ final iosSpecs = <DeviceSpecification>[
       top: 20.0,
     ),
     tablet: true,
+    platform: TargetPlatform.iOS,
   ),
   DeviceSpecification(
     name: 'iPad Pro 12.9" 3rd gen',
@@ -73,20 +82,23 @@ final iosSpecs = <DeviceSpecification>[
     padding: EdgeInsets.only(top: 24.0, bottom: 20.0),
     cornerRadius: 20.0,
     tablet: true,
+    platform: TargetPlatform.iOS,
   ),
 ];
 
-final androidSpecs = <DeviceSpecification>[
+final androidDevices = <DeviceSpecification>[
   DeviceSpecification(
     name: 'Android One',
     size: Size(320.0, 569.0),
     padding: EdgeInsets.only(top: 24.0),
     navBarHeight: 48.0,
+    platform: TargetPlatform.android,
   ),
   DeviceSpecification(
     name: 'Nexus 5',
     size: Size(360.0, 640.0),
     padding: EdgeInsets.only(top: 24.0),
+    platform: TargetPlatform.android,
   ),
   DeviceSpecification(
     name: 'Motorola G7',
@@ -94,61 +106,72 @@ final androidSpecs = <DeviceSpecification>[
     padding: EdgeInsets.only(top: 32.0),
     notchSize: Size(160.0, 32.0),
     cornerRadius: 15.0,
+    platform: TargetPlatform.android,
   ),
   DeviceSpecification(
     name: 'Galaxy S8',
     size: Size(360.0, 740.0),
     padding: EdgeInsets.only(top: 24.0),
     cornerRadius: 15.0,
+    platform: TargetPlatform.android,
   ),
   DeviceSpecification(
     name: 'Nexus 4',
     size: Size(384.0, 640.0),
     padding: EdgeInsets.only(top: 24.0),
+    platform: TargetPlatform.android,
   ),
   DeviceSpecification(
     name: 'Nexus 6',
     size: Size(411.0, 731.0),
     padding: EdgeInsets.only(top: 24.0),
+    platform: TargetPlatform.android,
   ),
   DeviceSpecification(
     name: 'Pixel 3',
     size: Size(412.0, 824.0),
     padding: EdgeInsets.only(top: 24.0),
     cornerRadius: 15.0,
+    platform: TargetPlatform.android,
   ),
   DeviceSpecification(
     name: 'Pixel 3 XL',
     size: Size(412.0, 847.0),
     padding: EdgeInsets.only(top: 24.0),
     cornerRadius: 15.0,
+    platform: TargetPlatform.android,
   ),
   DeviceSpecification(
     name: 'Galaxy Note 4',
     size: Size(480.0, 853.0),
     padding: EdgeInsets.only(top: 24.0),
+    platform: TargetPlatform.android,
   ),
   DeviceSpecification(
     name: 'Xperia C4',
     size: Size(540.0, 960.0),
     padding: EdgeInsets.only(top: 24.0),
+    platform: TargetPlatform.android,
   ),
   DeviceSpecification(
     name: 'Nexus 7',
     size: Size(600.0, 960.0),
     padding: EdgeInsets.only(top: 24.0),
     tablet: true,
+    platform: TargetPlatform.android,
   ),
   DeviceSpecification(
     name: 'Nexus 9',
     size: Size(768.0, 1024.0),
     padding: EdgeInsets.only(top: 24.0),
     tablet: true,
+    platform: TargetPlatform.android,
   ),
   DeviceSpecification(
     name: 'Nexus 10',
     size: Size(800.0, 1280.0),
     padding: EdgeInsets.only(top: 24.0),
     tablet: true,
+    platform: TargetPlatform.android,
   ),
 ];

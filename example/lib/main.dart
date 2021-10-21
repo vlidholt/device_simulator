@@ -13,12 +13,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'DeviceSimulator demo',
+      title: 'dotup rapid flutter prototyping',
       home: DeviceSimulator(
         initialDeviceIndex: 3,
         initialPlatform: TargetPlatform.android,
         orientation: Orientation.portrait,
         brightness: Brightness.dark,
+        showBottomBar: true,
         enable: debugEnableDeviceSimulator,
         child: Scaffold(
           appBar: AppBar(
