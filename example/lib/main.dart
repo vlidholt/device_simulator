@@ -1,4 +1,5 @@
 import 'package:dotup_device_simulator/dotup_device_simulator.dart';
+import 'package:dotup_flutter_widgets/dotup_flutter_widgets.dart';
 import 'package:flutter/material.dart';
 
 // It's good practice to define a constant for enabling the device simulator
@@ -21,14 +22,7 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.dark,
         showBottomBar: true,
         enable: debugEnableDeviceSimulator,
-        builder: (_) => Scaffold(
-          appBar: AppBar(
-            title: Text('DeviceSimulator Demo'),
-          ),
-          body: Center(
-            child: Text('Hello multiple resolutions!'),
-          ),
-        ),
+        builder: (_) => ScreenInfoPage(),
       ),
     );
   }

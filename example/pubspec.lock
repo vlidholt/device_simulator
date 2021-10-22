@@ -105,9 +105,9 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "2.0.1"
+    version: "2.0.2"
   dotup_flutter_widgets:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: dotup_flutter_widgets
       url: "https://pub.dartlang.org"

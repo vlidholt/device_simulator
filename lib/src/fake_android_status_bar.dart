@@ -33,22 +33,24 @@ class FakeAndroidStatusBar extends StatelessWidget {
           Expanded(
             child: Container(),
           ),
-          Padding(
-            padding: EdgeInsets.all(padding),
-            child: Icon(
-              Icons.network_wifi,
-              color: Colors.white,
-              size: iconSize,
+          if (iconSize > 0)
+            Padding(
+              padding: EdgeInsets.all(padding),
+              child: Icon(
+                Icons.network_wifi,
+                color: Colors.white,
+                size: iconSize,
+              ),
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.all(padding),
-            child: Icon(
-              Icons.battery_full,
-              color: Colors.white,
-              size: iconSize,
+          if (iconSize > 0)
+            Padding(
+              padding: EdgeInsets.all(padding),
+              child: Icon(
+                Icons.battery_full,
+                color: Colors.white,
+                size: iconSize,
+              ),
             ),
-          ),
         ],
       ),
     );

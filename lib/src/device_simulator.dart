@@ -1,26 +1,15 @@
+import 'package:dotup_device_simulator/dotup_device_simulator.dart';
 import 'package:dotup_device_simulator/src/Notch.dart';
-import 'package:dotup_device_simulator/src/device_popup_menu.dart';
-import 'package:dotup_flutter_widgets/dotup_flutter_widgets.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import 'bottom_bar.dart';
 import 'custom_navigator.dart';
 import 'device_spec_list.dart';
 // import 'disabled.dart';
 import 'fake_android_status_bar.dart';
 import 'fake_ios_status_bar.dart';
 import 'fake_status_bar.dart';
-
-const double _kSettingsHeight = 72.0;
-final Color? _kDividerColor = Colors.grey.shade700;
-
-final _kTextStyle = TextStyle(
-  color: Colors.white,
-  fontFamily: '.SF UI Text',
-  fontSize: 12.0,
-  decoration: TextDecoration.none,
-);
 
 /// Add the [DeviceSimulator] at the root of your widget tree, right below your
 /// App widget. DeviceSimulator will override the devices [MediaQueryData] and
@@ -60,6 +49,8 @@ class DeviceSimulator extends StatefulWidget {
 
   final bool showBottomBar;
 
+  final bool showDeviceSlider;
+
   static late MediaQueryData mediaQueryData;
 
   /// Creates a new [DeviceSimulator].
@@ -76,6 +67,7 @@ class DeviceSimulator extends StatefulWidget {
     this.initialPlatform = TargetPlatform.android,
     Color? backgroundColor,
     this.showBottomBar = true,
+    this.showDeviceSlider = true,
   }) : this.backgroundColor = backgroundColor ?? Colors.grey.shade900;
 
   _DeviceSimulatorState createState() => _DeviceSimulatorState();
@@ -84,10 +76,12 @@ class DeviceSimulator extends StatefulWidget {
 class _DeviceSimulatorState extends State<DeviceSimulator> {
   final _contentKey = UniqueKey();
   final _navigatorKey = GlobalKey<NavigatorState>();
-  late int _currentDevice;
+  late DeviceSpecification _currentDevice;
   late TargetPlatform _platform;
   // final _menuKey = GlobalKey();
   late Orientation _orientation;
+  late bool _showDeviceSlider;
+  late List<DeviceSpecification> devices;
 
   @override
   void initState() {
@@ -98,7 +92,9 @@ class _DeviceSimulatorState extends State<DeviceSimulator> {
     }
     _orientation = widget.orientation ?? Orientation.landscape;
     _platform = widget.initialPlatform;
-    _currentDevice = widget.initialDeviceIndex;
+    devices = _platform == TargetPlatform.iOS ? iosDevices : androidDevices;
+    _currentDevice = devices[widget.initialDeviceIndex];
+    _showDeviceSlider = widget.showDeviceSlider;
   }
 
   @override
@@ -111,12 +107,12 @@ class _DeviceSimulatorState extends State<DeviceSimulator> {
     var realMediaQuery = MediaQuery.of(context);
     var theme = Theme.of(context);
 
-    var devices = _platform == TargetPlatform.iOS ? iosDevices : androidDevices;
-    var spec = devices[_currentDevice];
+    devices = _platform == TargetPlatform.iOS ? iosDevices : androidDevices;
 
-    Size simulatedSize = spec.size;
+    Size simulatedSize = _currentDevice.size;
 
     final isLandscape = _orientation == Orientation.landscape;
+
     // final isLandscape =
     //     widget.orientation == null ? realMediaQuery.orientation == Orientation.landscape : widget.orientation == Orientation.landscape;
 
@@ -126,26 +122,12 @@ class _DeviceSimulatorState extends State<DeviceSimulator> {
 
     double navBarHeight = 0.0;
     if (_platform == TargetPlatform.android && widget.androidShowNavigationBar) {
-      navBarHeight = spec.navBarHeight;
+      navBarHeight = _currentDevice.navBarHeight;
     }
 
-    bool overflowWidth = false;
-    bool overflowHeight = false;
-
-    if (simulatedSize.width > realMediaQuery.size.width) {
-      simulatedSize = Size(realMediaQuery.size.width, simulatedSize.height);
-      overflowWidth = true;
-    }
-
-    double settingsHeight = _kSettingsHeight;
-    if (simulatedSize.height > realMediaQuery.size.height - settingsHeight) {
-      simulatedSize = Size(simulatedSize.width, realMediaQuery.size.height - settingsHeight);
-      overflowHeight = true;
-    }
-
-    EdgeInsets padding = spec.padding;
-    if (isLandscape && spec.paddingLandscape != null) {
-      padding = spec.paddingLandscape!;
+    EdgeInsets padding = _currentDevice.padding;
+    if (isLandscape && _currentDevice.paddingLandscape != null) {
+      padding = _currentDevice.paddingLandscape!;
     }
 
     DeviceSimulator.mediaQueryData = realMediaQuery.copyWith(
@@ -154,7 +136,7 @@ class _DeviceSimulatorState extends State<DeviceSimulator> {
     );
 
     Widget clippedContent = ClipRRect(
-      borderRadius: BorderRadius.all(Radius.circular(spec.cornerRadius)),
+      borderRadius: BorderRadius.all(Radius.circular(_currentDevice.cornerRadius)),
       child: Padding(
         padding: EdgeInsets.only(bottom: navBarHeight),
         child: MediaQuery(
@@ -174,10 +156,10 @@ class _DeviceSimulatorState extends State<DeviceSimulator> {
 
     clippedContent = Stack(
       children: <Widget>[
-        clippedContent,
+        Container(width: simulatedSize.width, height: simulatedSize.height, child: clippedContent),
         Notch(
           simulatedSize: simulatedSize,
-          notchSize: spec.notchSize,
+          notchSize: _currentDevice.notchSize,
           isLandscape: isLandscape,
           backgroundColor: widget.backgroundColor,
         ),
@@ -185,18 +167,18 @@ class _DeviceSimulatorState extends State<DeviceSimulator> {
           padding: padding,
           platform: _platform,
           widget: widget,
-          spec: spec,
+          spec: _currentDevice,
         ),
-        if (_platform == TargetPlatform.iOS && spec.cornerRadius > 0.0 && realMediaQuery.size != simulatedSize)
+        if (_platform == TargetPlatform.iOS && _currentDevice.cornerRadius > 0.0 && realMediaQuery.size != simulatedSize)
           Positioned(
             left: 0.0,
             right: 0.0,
             bottom: 0.0,
-            height: spec.padding.bottom,
+            height: _currentDevice.padding.bottom,
             child: FakeIOSMultitaskBar(
               width: simulatedSize.width / 3.0,
               color: widget.iOSMultitaskBarColor,
-              tablet: spec.tablet,
+              tablet: _currentDevice.tablet,
             ),
           ),
         if (_platform == TargetPlatform.android && widget.androidShowNavigationBar)
@@ -204,20 +186,14 @@ class _DeviceSimulatorState extends State<DeviceSimulator> {
             left: 0.0,
             right: 0.0,
             bottom: 0.0,
-            height: spec.navBarHeight,
+            height: _currentDevice.navBarHeight,
             child: FakeAndroidNavBar(
-              height: spec.navBarHeight,
-              cornerRadius: spec.cornerRadius,
+              height: _currentDevice.navBarHeight,
+              cornerRadius: _currentDevice.cornerRadius,
             ),
           ),
       ],
     );
-
-    final portraitColor = _orientation == Orientation.portrait ? Colors.white : Colors.white24;
-    final landscapeColor = _orientation == Orientation.landscape ? Colors.white : Colors.white24;
-
-    final iosColor = _platform == TargetPlatform.iOS ? Colors.white : Colors.white24;
-    final androidColor = _platform == TargetPlatform.android ? Colors.white : Colors.white24;
 
     return Material(
       color: widget.backgroundColor,
@@ -226,138 +202,39 @@ class _DeviceSimulatorState extends State<DeviceSimulator> {
           Expanded(
             child: Align(
               alignment: Alignment(0.0, 0.0),
-              child: Container(
-                width: simulatedSize.width,
-                height: simulatedSize.height,
-                child: clippedContent,
+              child: FittedBox(
+                child: Container(
+                  width: simulatedSize.width,
+                  height: simulatedSize.height,
+                  child: clippedContent,
+                ),
               ),
             ),
           ),
           if (widget.showBottomBar)
-            Container(
-              height: 72.0,
-              color: Colors.black,
-              padding: EdgeInsets.only(
-                  left: 16.0 + realMediaQuery.padding.left,
-                  right: 16.0 + realMediaQuery.padding.right,
-                  bottom: realMediaQuery.padding.bottom),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  DeviceDropDown(
-                    iconData: Icons.android,
-                    devices: androidDevices,
-                    currentIndex: 0,
-                    backgroundColor: Colors.black,
-                    iconColor: androidColor,
-                    onDeviceSelected: (value) {
-                      setState(() {
-                        _platform = value.platform;
-                        _currentDevice = androidDevices.indexOf(value);
-                      });
-                    },
-                  ),
-                  DeviceDropDown(
-                    iconData: FontAwesomeIcons.apple,
-                    devices: iosDevices,
-                    currentIndex: 0,
-                    backgroundColor: Colors.black,
-                    iconColor: iosColor,
-                    onDeviceSelected: (value) {
-                      setState(() {
-                        _platform = value.platform;
-                        _currentDevice = iosDevices.indexOf(value);
-                      });
-                    },
-                  ),
-                  VerticalDivider(
-                    color: _kDividerColor,
-                    indent: 4.0,
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      setState(() {
-                        _orientation = Orientation.portrait;
-                      });
-                    },
-                    icon: Icon(Icons.stay_current_portrait, color: portraitColor),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      setState(() {
-                        _orientation = Orientation.landscape;
-                      });
-                    },
-                    icon: Icon(Icons.stay_current_landscape, color: landscapeColor),
-                  ),
-                  VerticalDivider(
-                    color: _kDividerColor,
-                    indent: 4.0,
-                  ),
-                  Container(
-                    padding: EdgeInsets.only(left: 8.0),
-                    width: 120.0,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            Text(
-                              '${simulatedSize.width.round()} px',
-                              style: _kTextStyle.copyWith(color: overflowWidth ? Colors.orange : null),
-                            ),
-                            Text(
-                              ' • ',
-                              style: _kTextStyle,
-                            ),
-                            Text(
-                              '${simulatedSize.height.round()} px',
-                              style: _kTextStyle.copyWith(color: overflowHeight ? Colors.orange : null),
-                            ),
-                          ],
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(top: 4.0),
-                          child: Text(
-                            devices[_currentDevice].name,
-                            style: _kTextStyle.copyWith(color: Colors.white54, fontSize: 10.0),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            textAlign: TextAlign.start,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Expanded(
-                    child: Slider(
-                      divisions: devices.length - 1,
-                      min: 0.0,
-                      max: (devices.length - 1).toDouble(),
-                      value: _currentDevice.toDouble(),
-                      label: devices[_currentDevice].name,
-                      onChanged: (double device) {
-                        setState(() {
-                          _currentDevice = device.round();
-                        });
-                      },
-                    ),
-                  ),
-                  VerticalDivider(
-                    color: _kDividerColor,
-                    indent: 4.0,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(8, 8, 4, 8),
-                    child: DotupLogo(),
-                  ),
-                ],
-              ),
+            BottomBar(
+              devices: devices,
+              device: _currentDevice,
+              orientation: _orientation,
+              realMediaQuery: realMediaQuery,
+              simulatedSize: simulatedSize,
+              onDeviceChanged: (value) {
+                setState(() {
+                  _platform = value.device.platform;
+                  _currentDevice = value.device;
+                  _orientation = value.orientation;
+                });
+              },
             ),
         ],
       ),
     );
   }
+}
+
+class DeviceChanged {
+  DeviceSpecification device;
+  Orientation orientation;
+
+  DeviceChanged({required this.device, required this.orientation});
 }

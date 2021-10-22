@@ -116,6 +116,16 @@ final androidDevices = <DeviceSpecification>[
     platform: TargetPlatform.android,
   ),
   DeviceSpecification.fromPixel(
+    name: 'Galaxy S8+',
+    width: 1080,
+    height: 2220,
+    pixelRatio: 2.625,
+    // size: Size(360.0, 740.0),
+    padding: EdgeInsets.only(top: 24),
+    cornerRadius: 15.0,
+    platform: TargetPlatform.android,
+  ),
+  DeviceSpecification.fromPixel(
     name: 'Galaxy S20+',
     width: 1080,
     height: 2400,
