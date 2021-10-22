@@ -13,7 +13,7 @@ import 'fake_ios_status_bar.dart';
 import 'fake_status_bar.dart';
 
 const double _kSettingsHeight = 72.0;
-final Color? _kDividerColor = Colors.grey[700];
+final Color? _kDividerColor = Colors.grey.shade700;
 
 final _kTextStyle = TextStyle(
   color: Colors.white,
@@ -31,7 +31,7 @@ final _kTextStyle = TextStyle(
 class DeviceSimulator extends StatefulWidget {
   /// The widget tree that is affected handled by the [DeviceSimulator],
   /// typically this is your whole app except the top [App] widget.
-  final Widget child;
+  late final WidgetBuilder builder;
 
   /// Enables or disables the DeviceSimulator, default is enabled, but this
   /// should be set to false in production.
@@ -62,7 +62,8 @@ class DeviceSimulator extends StatefulWidget {
 
   /// Creates a new [DeviceSimulator].
   DeviceSimulator({
-    required this.child,
+    Widget? child,
+    WidgetBuilder? builder,
     this.enable = true,
     this.brightness = Brightness.light,
     this.iOSMultitaskBarColor = Colors.grey,
@@ -73,7 +74,10 @@ class DeviceSimulator extends StatefulWidget {
     this.initialPlatform = TargetPlatform.android,
     Color? backgroundColor,
     this.showBottomBar = true,
-  }) : this.backgroundColor = backgroundColor ?? Colors.grey.shade900;
+  })  : this.backgroundColor = backgroundColor ?? Colors.grey.shade900,
+        assert(child != null || builder != null) {
+    this.builder = builder ?? (_) => child!;
+  }
 
   _DeviceSimulatorState createState() => _DeviceSimulatorState();
 }
@@ -101,7 +105,7 @@ class _DeviceSimulatorState extends State<DeviceSimulator> {
   @override
   Widget build(BuildContext context) {
     if (!widget.enable) {
-      return widget.child;
+      return widget.builder(context);
     }
 
     var realMediaQuery = MediaQuery.of(context);
@@ -157,7 +161,7 @@ class _DeviceSimulatorState extends State<DeviceSimulator> {
             data: theme.copyWith(platform: _platform),
             child: CustomNavigator(
               navigatorKey: _navigatorKey,
-              home: widget.child,
+              home: widget.builder(context),
               pageRoute: PageRoutes.materialPageRoute,
             ),
           ),

@@ -105,7 +105,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "1.1.0"
+    version: "1.2.0"
   dotup_flutter_widgets:
     dependency: transitive
     description:
