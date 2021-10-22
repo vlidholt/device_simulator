@@ -104,6 +104,7 @@ class _DeviceSimulatorState extends State<DeviceSimulator> {
   @override
   Widget build(BuildContext context) {
     if (!widget.enable) {
+      DeviceSimulator.mediaQueryData = MediaQuery.of(context);
       return widget.builder(context);
     }
 

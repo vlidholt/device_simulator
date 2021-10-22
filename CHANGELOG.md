@@ -9,3 +9,8 @@
 
  - Fix: DeviceSimulator: static late MediaQueryData mediaQueryData
  
+
+## [2.0.1] - New release
+
+ - Fix: DeviceSimulator: DeviceSimulator.mediaQueryData = MediaQuery.of(context) if disabled
+ 
