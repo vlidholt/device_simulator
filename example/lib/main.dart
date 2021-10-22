@@ -22,7 +22,17 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.dark,
         showBottomBar: true,
         enable: debugEnableDeviceSimulator,
-        builder: (_) => ScreenInfoPage(),
+        // builder: (_) => ScreenInfoPage(),
+        builder: (_) {
+          return Scaffold(
+            appBar: AppBar(
+              title: Text('Title'),
+            ),
+            body: Center(
+              child: Text('test'),
+            ),
+          );
+        },
       ),
     );
   }
