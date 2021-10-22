@@ -60,10 +60,12 @@ class DeviceSimulator extends StatefulWidget {
 
   final bool showBottomBar;
 
+  static late MediaQueryData mediaQueryData;
+
   /// Creates a new [DeviceSimulator].
   DeviceSimulator({
-    Widget? child,
-    WidgetBuilder? builder,
+    // Widget? child,
+    required this.builder,
     this.enable = true,
     this.brightness = Brightness.light,
     this.iOSMultitaskBarColor = Colors.grey,
@@ -74,10 +76,7 @@ class DeviceSimulator extends StatefulWidget {
     this.initialPlatform = TargetPlatform.android,
     Color? backgroundColor,
     this.showBottomBar = true,
-  })  : this.backgroundColor = backgroundColor ?? Colors.grey.shade900,
-        assert(child != null || builder != null) {
-    this.builder = builder ?? (_) => child!;
-  }
+  }) : this.backgroundColor = backgroundColor ?? Colors.grey.shade900;
 
   _DeviceSimulatorState createState() => _DeviceSimulatorState();
 }
@@ -123,6 +122,7 @@ class _DeviceSimulatorState extends State<DeviceSimulator> {
     if (isLandscape) {
       simulatedSize = simulatedSize.flipped;
     }
+
     double navBarHeight = 0.0;
     if (_platform == TargetPlatform.android && widget.androidShowNavigationBar) {
       navBarHeight = spec.navBarHeight;
@@ -147,16 +147,18 @@ class _DeviceSimulatorState extends State<DeviceSimulator> {
       padding = spec.paddingLandscape!;
     }
 
+    DeviceSimulator.mediaQueryData = realMediaQuery.copyWith(
+      size: Size(simulatedSize.width, simulatedSize.height - navBarHeight),
+      padding: padding,
+    );
+
     Widget clippedContent = ClipRRect(
       borderRadius: BorderRadius.all(Radius.circular(spec.cornerRadius)),
       child: Padding(
         padding: EdgeInsets.only(bottom: navBarHeight),
         child: MediaQuery(
           key: _contentKey,
-          data: realMediaQuery.copyWith(
-            size: Size(simulatedSize.width, simulatedSize.height - navBarHeight),
-            padding: padding,
-          ),
+          data: DeviceSimulator.mediaQueryData,
           child: Theme(
             data: theme.copyWith(platform: _platform),
             child: CustomNavigator(

@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.dark,
         showBottomBar: true,
         enable: debugEnableDeviceSimulator,
-        child: Scaffold(
+        builder: (_) => Scaffold(
           appBar: AppBar(
             title: Text('DeviceSimulator Demo'),
           ),

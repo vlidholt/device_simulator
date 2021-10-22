@@ -4,3 +4,8 @@
 
  - New: New devices
  - New: DeviceSimulator with builder
+
+## [2.0.0] - New release
+
+ - Fix: DeviceSimulator: static late MediaQueryData mediaQueryData
+ 
