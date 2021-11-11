@@ -1,5 +1,6 @@
 name: example
 description: A new Flutter project.
+publish_to: none
 
 version: 1.0.0+1
 
@@ -9,10 +10,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  device_simulator:
+  dotup_device_simulator:
     path: ../
 
   cupertino_icons: ^0.1.2
+  dotup_flutter_widgets: ^2.1.3
 
 dev_dependencies:
   flutter_test:

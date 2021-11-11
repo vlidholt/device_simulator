@@ -1,5 +1,6 @@
+import 'package:dotup_device_simulator/dotup_device_simulator.dart';
+import 'package:dotup_flutter_widgets/dotup_flutter_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:device_simulator/device_simulator.dart';
 
 // It's good practice to define a constant for enabling the device simulator
 // so you can easily turn it on or off
@@ -13,18 +14,25 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'DeviceSimulator demo',
+      title: 'dotup rapid flutter prototyping',
       home: DeviceSimulator(
+        initialDeviceIndex: 3,
+        initialPlatform: TargetPlatform.android,
+        orientation: Orientation.portrait,
         brightness: Brightness.dark,
+        showBottomBar: true,
         enable: debugEnableDeviceSimulator,
-        child: Scaffold(
-          appBar: AppBar(
-            title: Text('DeviceSimulator Demo'),
-          ),
-          body: Center(
-            child: Text('Hello multiple resolutions!'),
-          ),
-        ),
+        // builder: (_) => ScreenInfoPage(),
+        builder: (_) {
+          return Scaffold(
+            appBar: AppBar(
+              title: Text('Title'),
+            ),
+            body: Center(
+              child: Text('test'),
+            ),
+          );
+        },
       ),
     );
   }

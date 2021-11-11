@@ -6,8 +6,7 @@ class FakeAndroidStatusBar extends StatelessWidget {
   final double horizontalPadding;
   final Color backgroundColor;
 
-  FakeAndroidStatusBar(
-      {this.height, this.horizontalPadding = 8.0, this.backgroundColor});
+  FakeAndroidStatusBar({required this.height, this.horizontalPadding = 8.0, required this.backgroundColor});
 
   @override
   Widget build(BuildContext context) {
@@ -34,22 +33,24 @@ class FakeAndroidStatusBar extends StatelessWidget {
           Expanded(
             child: Container(),
           ),
-          Padding(
-            padding: EdgeInsets.all(padding),
-            child: Icon(
-              Icons.network_wifi,
-              color: Colors.white,
-              size: iconSize,
+          if (iconSize > 0)
+            Padding(
+              padding: EdgeInsets.all(padding),
+              child: Icon(
+                Icons.network_wifi,
+                color: Colors.white,
+                size: iconSize,
+              ),
             ),
-          ),
-          Padding(
-            padding: EdgeInsets.all(padding),
-            child: Icon(
-              Icons.battery_full,
-              color: Colors.white,
-              size: iconSize,
+          if (iconSize > 0)
+            Padding(
+              padding: EdgeInsets.all(padding),
+              child: Icon(
+                Icons.battery_full,
+                color: Colors.white,
+                size: iconSize,
+              ),
             ),
-          ),
         ],
       ),
     );
@@ -60,7 +61,7 @@ class FakeAndroidNavBar extends StatelessWidget {
   final double height;
   final double cornerRadius;
 
-  FakeAndroidNavBar({this.height, this.cornerRadius = 0.0});
+  FakeAndroidNavBar({required this.height, this.cornerRadius = 0.0});
 
   @override
   Widget build(BuildContext context) {

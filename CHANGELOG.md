@@ -1,11 +1,20 @@
-## [0.9.1] - 2019-10-27 - Initial release.
+## [1.1.0] - New release
 
-* Initial working version of DeviceSimulator
+## [1.2.0] - New release
 
-## [0.9.5] - 2019-10-27 - Docs.
+ - New: New devices
+ - New: DeviceSimulator with builder
 
-* Improved documentation
+## [2.0.0] - New release
 
-## [0.9.6] - 2020-02-23 - Support for routes
+ - Fix: DeviceSimulator: static late MediaQueryData mediaQueryData
+ 
+## [2.0.1] - New release
 
-* Breaking change. This update includes automatic support for routes. There is no longer a need to include DeviceSimulator when pushing a route.
+ - Fix: DeviceSimulator: DeviceSimulator.mediaQueryData = MediaQuery.of(context) if disabled 
+
+## [2.0.2] - New release
+
+ - New: New devices
+ - New: DeviceSimulator placed inside FitteBox
+ 
